@@ -62,7 +62,24 @@ app.post("/blogs", (req,res) => {
 
 //Show Route
 app.get("/blogs/:id", (req,res) => {
-    res.send("Show Page!")
+    Blog.findById(req.params.id, (err,foundBlog) => {
+        if(err) {
+            res.redirect("/blogs");
+        } else {
+            res.render("show", {blog: foundBlog});
+        }
+    });
+});
+
+//Edit Route
+app.get("/blogs/:id/edit", (req,res) => {
+    Blog.findById(req.params.id, (err, foundBlog) => {
+        if(err) {
+            res.redirect("/blogs");
+        } else {
+            res.render("edit", {blog: foundBlog});
+        }
+    });
 });
 
 app.listen(3000, () => {
