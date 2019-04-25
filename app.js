@@ -1,8 +1,8 @@
 var express = require("express"),
 methodOverride = require("method-override"),
-app 		= express(),
 bodyParser 	= require("body-parser"),
-mongoose 	= require("mongoose");
+mongoose 	= require("mongoose")
+app 		= express();
 
 //App Config
 mongoose.connect("mongodb://localhost/blog", {useNewUrlParser: true});
@@ -91,6 +91,17 @@ app.put("/blogs/:id", (req,res) => {
             res.redirect("/blogs");
         } else {
             res.redirect("/blogs/" + req.params.id);
+        }
+    });
+});
+
+//Delete Route
+app.delete("/blogs/:id", (req,res) => {
+    Blog.findByIdAndDelete(req.params.id, req.body.blog, (err,removedBlog) => {
+        if(err) {
+            res.redirect("/blogs");
+        } else {
+            res.redirect("/blogs");            
         }
     });
 });
